@@ -19,8 +19,6 @@ class Map {
     }
 }
 
-Map.length = 0;
-
 const instance = new Map();
 
 if( isUndefined( instance.size ) ) {
