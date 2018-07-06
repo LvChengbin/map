@@ -29,6 +29,8 @@
         this.map = iterable || [];
     };
 
+    Map.length = 0;
+
     var instance = new Map();
 
     if( isUndefined( instance.size ) ) {
