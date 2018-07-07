@@ -120,7 +120,7 @@ describe( 'Map.prototype.forEach', () => {
         } );
     } );
 
-    it( 'specifying an this arguments', () => {
+    it( 'specifying a this argument', () => {
         const that = {};
         const obj = () => {};
         const map = new Map( [ [ obj, 0 ] ] );
@@ -131,7 +131,7 @@ describe( 'Map.prototype.forEach', () => {
 } );
 
 describe( 'Map.prototype.has', () => {
-    it( 'the try with an existing value', () => {
+    it( 'to try with an existing value', () => {
         const obj = () => {};
         const map = new Map( [ [ obj, 0 ] ] );
         expect( map.has( obj ) ).toBeTruthy();

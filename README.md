@@ -18,7 +18,7 @@ If you want to use the library in browsers that loading with `<SCRIPT>` tag, you
 ```html
 <script src="./map.bc.js"></script>
 <script>
-var map = new JMap( [ [ 'x', 1 ], [ 'y', 2 ] ] );
+var map = new Map( [ [ 'x', 1 ], [ 'y', 2 ] ] );
 console.log( map.size );
 </script>
 ```
