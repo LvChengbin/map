@@ -11,7 +11,7 @@ export default [ {
     ],
     output : [
         { file : 'dist/map.cjs.js', format : 'cjs' },
-        { file : 'dist/map.js', format : 'umd', name : 'Map' }
+        { file : 'dist/map.js', format : 'umd', name : 'JMap' }
     ]
 }, {
     input : 'src/map.js',
@@ -28,6 +28,6 @@ export default [ {
         } )
     ],
     output : [
-        { file : 'dist/map.bc.js', format : 'umd', name : 'Map' }
+        { file : 'dist/map.bc.js', format : 'umd', name : 'JMap' }
     ]
 } ];

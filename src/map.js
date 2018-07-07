@@ -9,13 +9,13 @@ function find( haystack, key ) {
     return false;
 }
 
-class Map {
+class JMap {
     constructor( iterable = [] ) {
-        if( !( this instanceof Map ) ) {
+        if( !( this instanceof JMap ) ) {
             throw new TypeError( 'Constructor Map requires \'new\'' );
         }
         if( g.Map ) return new g.Map( iterable );
-        this.map = iterable || [];
+        this.map = iterable;
     }
     get size() {
         return this.map.length;
@@ -84,4 +84,4 @@ class Map {
     }
 }
 
-export default Map;
+export default JMap;

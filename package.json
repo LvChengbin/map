@@ -1,6 +1,6 @@
 {
     "name": "@lvchengbin/map",
-    "version": "0.0.4",
+    "version": "0.0.7",
     "description": "Polyfill of ES6 Map for browsers.",
     "keywords": [
         "polyfill",
@@ -18,6 +18,8 @@
         "karma-chrome-launcher": "^2.2.0",
         "karma-jasmine": "^1.1.2",
         "karma-rollup-preprocessor": "^6.0.0",
+        "karma-yolk-preprocessor": "0.0.2",
+        "koa-static": "^5.0.0",
         "optimist": "^0.6.1",
         "pre-commit": "^1.2.2",
         "puppeteer": "^1.5.0",

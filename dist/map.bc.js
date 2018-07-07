@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
-    (global.Map = factory());
+    (global.JMap = factory());
 }(this, (function () { 'use strict';
 
     function isUndefined() {
@@ -19,14 +19,14 @@
         return false;
     }
 
-    var Map = function Map( iterable ) {
+    var JMap = function JMap( iterable ) {
         if ( iterable === void 0 ) iterable = [];
 
-        if( !( this instanceof Map ) ) {
+        if( !( this instanceof JMap ) ) {
             throw new TypeError( 'Constructor Map requires \'new\'' );
         }
         if( g.Map ) { return new g.Map( iterable ); }
-        this.map = iterable || [];
+        this.map = iterable;
     };
 
     var prototypeAccessors = { size: { configurable: true } };
@@ -34,12 +34,12 @@
         return this.map.length;
     };
 
-    Map.prototype.get = function get ( key ) {
+    JMap.prototype.get = function get ( key ) {
         var data = find( this.map, key );
         return data ? data[ 1 ] : undefined;
     };
 
-    Map.prototype.set = function set ( key, value ) {
+    JMap.prototype.set = function set ( key, value ) {
         var data = find( this.map, key );
         if( data ) {
             data[ 1 ] = value;
@@ -49,7 +49,7 @@
         return this;
     };
 
-    Map.prototype.delete = function delete$1 ( key ) {
+    JMap.prototype.delete = function delete$1 ( key ) {
             var this$1 = this;
 
         for( var i = 0, l = this.map.length; i < l; i += 1 ) {
@@ -63,11 +63,11 @@
         return false;
     };
 
-    Map.prototype.clear = function clear () {
+    JMap.prototype.clear = function clear () {
         this.map= [];
     };
 
-    Map.prototype.forEach = function forEach ( callback, thisArg ) {
+    JMap.prototype.forEach = function forEach ( callback, thisArg ) {
             var this$1 = this;
 
         isUndefined( thisArg ) && ( this.Arg = this );
@@ -78,11 +78,11 @@
         }
     };
 
-    Map.prototype.has = function has ( key ) {
+    JMap.prototype.has = function has ( key ) {
         return !!find( this.map, key );
     };
 
-    Map.prototype.keys = function keys () {
+    JMap.prototype.keys = function keys () {
             var this$1 = this;
 
         var keys = [];
@@ -94,11 +94,11 @@
         return keys;
     };
 
-    Map.prototype.entries = function entries () {
+    JMap.prototype.entries = function entries () {
         return this.map;
     };
 
-    Map.prototype.values = function values () {
+    JMap.prototype.values = function values () {
             var this$1 = this;
 
         var values = [];
@@ -110,8 +110,8 @@
         return values;
     };
 
-    Object.defineProperties( Map.prototype, prototypeAccessors );
+    Object.defineProperties( JMap.prototype, prototypeAccessors );
 
-    return Map;
+    return JMap;
 
 })));

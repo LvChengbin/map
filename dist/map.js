@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
-    (global.Map = factory());
+    (global.JMap = factory());
 }(this, (function () { 'use strict';
 
     function isUndefined() {
@@ -17,13 +17,13 @@
         return false;
     }
 
-    class Map {
+    class JMap {
         constructor( iterable = [] ) {
-            if( !( this instanceof Map ) ) {
+            if( !( this instanceof JMap ) ) {
                 throw new TypeError( 'Constructor Map requires \'new\'' );
             }
             if( g.Map ) return new g.Map( iterable );
-            this.map = iterable || [];
+            this.map = iterable;
         }
         get size() {
             return this.map.length;
@@ -92,6 +92,6 @@
         }
     }
 
-    return Map;
+    return JMap;
 
 })));
