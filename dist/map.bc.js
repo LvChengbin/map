@@ -8,8 +8,6 @@
         return arguments.length > 0 && typeof arguments[ 0 ] === 'undefined';
     }
 
-    var g = typeof global === 'undefined' ? window : global;
-
     function find( haystack, key ) {
         for( var i = 0, list = haystack; i < list.length; i += 1 ) {
             var item = list[i];
@@ -19,14 +17,13 @@
         return false;
     }
 
-    var JMap = function JMap( iterable ) {
+    var Map = function Map( iterable ) {
         if ( iterable === void 0 ) iterable = [];
 
-        if( !( this instanceof JMap ) ) {
+        if( !( this instanceof Map ) ) {
             throw new TypeError( 'Constructor Map requires \'new\'' );
         }
-        if( g.Map ) { return new g.Map( iterable ); }
-        this.map = iterable;
+        this.map = iterable || [];
     };
 
     var prototypeAccessors = { size: { configurable: true } };
@@ -34,12 +31,12 @@
         return this.map.length;
     };
 
-    JMap.prototype.get = function get ( key ) {
+    Map.prototype.get = function get ( key ) {
         var data = find( this.map, key );
         return data ? data[ 1 ] : undefined;
     };
 
-    JMap.prototype.set = function set ( key, value ) {
+    Map.prototype.set = function set ( key, value ) {
         var data = find( this.map, key );
         if( data ) {
             data[ 1 ] = value;
@@ -49,7 +46,7 @@
         return this;
     };
 
-    JMap.prototype.delete = function delete$1 ( key ) {
+    Map.prototype.delete = function delete$1 ( key ) {
             var this$1 = this;
 
         for( var i = 0, l = this.map.length; i < l; i += 1 ) {
@@ -63,11 +60,11 @@
         return false;
     };
 
-    JMap.prototype.clear = function clear () {
+    Map.prototype.clear = function clear () {
         this.map= [];
     };
 
-    JMap.prototype.forEach = function forEach ( callback, thisArg ) {
+    Map.prototype.forEach = function forEach ( callback, thisArg ) {
             var this$1 = this;
 
         isUndefined( thisArg ) && ( this.Arg = this );
@@ -78,11 +75,11 @@
         }
     };
 
-    JMap.prototype.has = function has ( key ) {
+    Map.prototype.has = function has ( key ) {
         return !!find( this.map, key );
     };
 
-    JMap.prototype.keys = function keys () {
+    Map.prototype.keys = function keys () {
             var this$1 = this;
 
         var keys = [];
@@ -94,11 +91,11 @@
         return keys;
     };
 
-    JMap.prototype.entries = function entries () {
+    Map.prototype.entries = function entries () {
         return this.map;
     };
 
-    JMap.prototype.values = function values () {
+    Map.prototype.values = function values () {
             var this$1 = this;
 
         var values = [];
@@ -110,8 +107,8 @@
         return values;
     };
 
-    Object.defineProperties( JMap.prototype, prototypeAccessors );
+    Object.defineProperties( Map.prototype, prototypeAccessors );
 
-    return JMap;
+    return Map;
 
 })));

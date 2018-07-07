@@ -1,7 +1,5 @@
 import isUndefined from '@lvchengbin/is/src/undefined';
 
-const g = typeof global === 'undefined' ? window : global;
-
 function find( haystack, key ) {
     for( let item of haystack ) {
         if( item[ 0 ] === key ) return item;
@@ -9,13 +7,12 @@ function find( haystack, key ) {
     return false;
 }
 
-class JMap {
+class Map {
     constructor( iterable = [] ) {
-        if( !( this instanceof JMap ) ) {
+        if( !( this instanceof Map ) ) {
             throw new TypeError( 'Constructor Map requires \'new\'' );
         }
-        if( g.Map ) return new g.Map( iterable );
-        this.map = iterable;
+        this.map = iterable || [];
     }
     get size() {
         return this.map.length;
@@ -84,4 +81,4 @@ class JMap {
     }
 }
 
-export default JMap;
+export default Map;

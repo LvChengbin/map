@@ -31,7 +31,6 @@ module.exports = function(config) {
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
-
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         // Most versions of PhantomJS do not suppport ES5 and ES6, so add es6-shim here to make sure all

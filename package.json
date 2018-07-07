@@ -1,6 +1,6 @@
 {
     "name": "@lvchengbin/map",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "Polyfill of ES6 Map for browsers.",
     "keywords": [
         "polyfill",
