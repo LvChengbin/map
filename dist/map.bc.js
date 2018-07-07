@@ -29,111 +29,88 @@
         this.map = iterable || [];
     };
 
-    var instance = new Map();
+    var prototypeAccessors = { size: { configurable: true } };
+    prototypeAccessors.size.get = function () {
+        return this.map.length;
+    };
 
-    if( isUndefined( instance.size ) ) {
-        Object.defineProperty( Map.prototype, 'size', {
-            enumerable : true,
-            configurable : true,
-            get: function get() {
-                return this.map.length;
-            }
-        } );
-    }
+    Map.prototype.get = function get ( key ) {
+        var data = find( this.map, key );
+        return data ? data[ 1 ] : undefined;
+    };
 
-    if( !instance.get )  {
-        Map.prototype.get = function( key ) {
-            var data = find( this.map, key );
-            return data ? data[ 1 ] : undefined;
-        };
-    }
+    Map.prototype.set = function set ( key, value ) {
+        var data = find( this.map, key );
+        if( data ) {
+            data[ 1 ] = value;
+        } else {
+            this.map.push( [ key, value ] );
+        }
+        return this;
+    };
 
-    if( !instance.set ) {
-        Map.prototype.set = function( key, value ) {
-            var data = find( this.map, key );
-            if( data ) {
-                data[ 1 ] = value;
-            } else {
-                this.map.push( [ key, value ] );
-            }
-            return this;
-        };
-    }
-
-    if( !instance.delete ) {
-        Map.prototype.delete = function( key ) {
+    Map.prototype.delete = function delete$1 ( key ) {
             var this$1 = this;
 
-            for( var i = 0, l = this.map.length; i < l; i += 1 ) {
-                var item = this$1.map[ i ];
-                if( item[ 0 ] === key ) {
-                    this$1.map.splice( i, 1 );
-                    return true;
-                }
+        for( var i = 0, l = this.map.length; i < l; i += 1 ) {
+            var item = this$1.map[ i ];
+            if( item[ 0 ] === key ) {
+                this$1.map.splice( i, 1 );
+                return true;
+            }
                 
-            }
-            return false;
-        };
-    }
+        }
+        return false;
+    };
 
-    if( !instance.clear ) {
-        Map.prototype.clear = function() {
-            this.map= [];
-        };
-    }
+    Map.prototype.clear = function clear () {
+        this.map= [];
+    };
 
-    if( !instance.forEach ) {
-        Map.prototype.forEach = function( callback, thisArg ) {
+    Map.prototype.forEach = function forEach ( callback, thisArg ) {
             var this$1 = this;
 
-            isUndefined( thisArg ) && ( this.Arg = this );
-            for( var i = 0, list = this$1.map; i < list.length; i += 1 ) {
-                var item = list[i];
+        isUndefined( thisArg ) && ( this.Arg = this );
+        for( var i = 0, list = this$1.map; i < list.length; i += 1 ) {
+            var item = list[i];
 
                 callback.call( thisArg, item[ 1 ], item[ 0 ], this$1 );
-            }
-        };
-    }
+        }
+    };
 
-    if( !instance.has ) {
-        Map.prototype.has = function( key ) {
-            return !!find( this.map, key );
-        };
-    }
+    Map.prototype.has = function has ( key ) {
+        return !!find( this.map, key );
+    };
 
-    if( !instance.keys ) {
-        Map.prototype.keys = function() {
+    Map.prototype.keys = function keys () {
             var this$1 = this;
 
-            var keys = [];
-            for( var i = 0, list = this$1.map; i < list.length; i += 1 ) {
-                var item = list[i];
+        var keys = [];
+        for( var i = 0, list = this$1.map; i < list.length; i += 1 ) {
+            var item = list[i];
 
                 keys.push( item[ 0 ] );
-            }
-            return keys;
-        };
-    }
+        }
+        return keys;
+    };
 
-    if( !instance.entries ) {
-        Map.prototype.entries = function() {
-            return this.map;
-        };
-    }
+    Map.prototype.entries = function entries () {
+        return this.map;
+    };
 
-    if( !instance.values ) {
-        Map.prototype.values = function() {
+    Map.prototype.values = function values () {
             var this$1 = this;
 
-            var values = [];
-            for( var i = 0, list = this$1.map; i < list.length; i += 1 ) {
-                var item = list[i];
+        var values = [];
+        for( var i = 0, list = this$1.map; i < list.length; i += 1 ) {
+            var item = list[i];
 
                 values.push( item[ 1 ] );
-            }
-            return values;
-        };
-    }
+        }
+        return values;
+    };
+
+    Object.defineProperties( Map.prototype, prototypeAccessors );
 
     return Map;
 

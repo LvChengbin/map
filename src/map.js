@@ -17,29 +17,16 @@ class Map {
         if( g.Map ) return new g.Map( iterable );
         this.map = iterable || [];
     }
-}
+    get size() {
+        return this.map.length;
+    }
 
-const instance = new Map();
-
-if( isUndefined( instance.size ) ) {
-    Object.defineProperty( Map.prototype, 'size', {
-        enumerable : true,
-        configurable : true,
-        get() {
-            return this.map.length;
-        }
-    } );
-}
-
-if( !instance.get )  {
-    Map.prototype.get = function( key ) {
+    get( key ) {
         const data = find( this.map, key );
         return data ? data[ 1 ] : undefined;
-    };
-}
+    }
 
-if( !instance.set ) {
-    Map.prototype.set = function( key, value ) {
+    set( key, value ) {
         const data = find( this.map, key );
         if( data ) {
             data[ 1 ] = value;
@@ -47,11 +34,9 @@ if( !instance.set ) {
             this.map.push( [ key, value ] );
         }
         return this;
-    };
-}
+    }
 
-if( !instance.delete ) {
-    Map.prototype.delete = function( key ) {
+    delete( key ) {
         for( let i = 0, l = this.map.length; i < l; i += 1 ) {
             const item = this.map[ i ];
             if( item[ 0 ] === key ) {
@@ -61,54 +46,42 @@ if( !instance.delete ) {
             
         }
         return false;
-    };
-}
+    }
 
-if( !instance.clear ) {
-    Map.prototype.clear = function() {
+    clear() {
         this.map= [];
-    };
-}
+    }
 
-if( !instance.forEach ) {
-    Map.prototype.forEach = function( callback, thisArg ) {
+    forEach( callback, thisArg ) {
         isUndefined( thisArg ) && ( this.Arg = this );
         for( let item of this.map ) {
             callback.call( thisArg, item[ 1 ], item[ 0 ], this );
         }
-    };
-}
+    }
 
-if( !instance.has ) {
-    Map.prototype.has = function( key ) {
+    has( key ) {
         return !!find( this.map, key );
-    };
-}
+    }
 
-if( !instance.keys ) {
-    Map.prototype.keys = function() {
+    keys() {
         const keys = [];
         for( let item of this.map ) {
             keys.push( item[ 0 ] );
         }
         return keys;
-    };
-}
+    }
 
-if( !instance.entries ) {
-    Map.prototype.entries = function() {
+    entries() {
         return this.map;
-    };
-}
+    }
 
-if( !instance.values ) {
-    Map.prototype.values = function() {
+    values() {
         const values = [];
         for( let item of this.map ) {
             values.push( item[ 1 ] );
         }
         return values;
-    };
+    }
 }
 
 export default Map;
