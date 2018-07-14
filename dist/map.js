@@ -20,72 +20,71 @@
             if( !( this instanceof Map ) ) {
                 throw new TypeError( 'Constructor Map requires \'new\'' );
             }
-            this.map = iterable || [];
-        }
-        get size() {
-            return this.map.length;
-        }
+            const map = iterable || [];
 
-        get( key ) {
-            const data = find( this.map, key );
-            return data ? data[ 1 ] : undefined;
-        }
-
-        set( key, value ) {
-            const data = find( this.map, key );
-            if( data ) {
-                data[ 1 ] = value;
-            } else {
-                this.map.push( [ key, value ] );
-            }
-            return this;
-        }
-
-        delete( key ) {
-            for( let i = 0, l = this.map.length; i < l; i += 1 ) {
-                const item = this.map[ i ];
-                if( item[ 0 ] === key ) {
-                    this.map.splice( i, 1 );
-                    return true;
+            Object.defineProperty( map, 'size', {
+                get() {
+                    return this.length;
                 }
-                
-            }
-            return false;
-        }
+            } );
 
-        clear() {
-            this.map= [];
-        }
+            map.get = key => {
+                const data = find( map, key );
+                return data ? data[ 1 ] : undefined;
+            };
 
-        forEach( callback, thisArg ) {
-            isUndefined( thisArg ) && ( this.Arg = this );
-            for( let item of this.map ) {
-                callback.call( thisArg, item[ 1 ], item[ 0 ], this );
-            }
-        }
+            map.set = ( key, value ) => {
+                const data = find( map, key );
+                if( data ) {
+                    data[ 1 ] = value;
+                } else {
+                    map.push( [ key, value ] );
+                }
+                return map;
+            };
 
-        has( key ) {
-            return !!find( this.map, key );
-        }
+            map.delete = key => {
+                for( let i = 0, l = map.length; i < l; i += 1 ) {
+                    if( map[ i ][ 0 ] === key ) {
+                        map.splice( i, 1 );
+                        return true;
+                    }
+                    
+                }
+                return false;
+            };
 
-        keys() {
-            const keys = [];
-            for( let item of this.map ) {
-                keys.push( item[ 0 ] );
-            }
-            return keys;
-        }
+            map.clear = () => {
+                map.length = 0;
+            };
 
-        entries() {
-            return this.map;
-        }
+            map.forEach = ( callback, thisArg ) => {
+                isUndefined( thisArg ) && ( thisArg = map );
+                for( let item of map ) {
+                    callback.call( thisArg, item[ 1 ], item[ 0 ], map );
+                }
+            };
 
-        values() {
-            const values = [];
-            for( let item of this.map ) {
-                values.push( item[ 1 ] );
-            }
-            return values;
+            map.has = key => !!find( map, key );
+
+            map.keys = () => {
+                const keys = [];
+                for( let item of map ) {
+                    keys.push( item[ 0 ] );
+                }
+                return keys;
+            };
+
+            map.entries = () => map;
+
+            map.values = () => {
+                const values = [];
+                for( let item of map ) {
+                    values.push( item[ 1 ] );
+                }
+                return values;
+            };
+            return map;
         }
     }
 
