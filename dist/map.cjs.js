@@ -1,8 +1,38 @@
 'use strict';
 
+/**
+ * async function
+ *
+ * @syntax: 
+ *  async function() {}
+ *  async () => {}
+ *  async x() => {}
+ *
+ * @compatibility
+ * IE: no
+ * Edge: >= 15
+ * Android: >= 5.0
+ *
+ */
+
+var isAsyncFunction = fn => ( {} ).toString.call( fn ) === '[object AsyncFunction]';
+
+var isFunction = fn => ({}).toString.call( fn ) === '[object Function]' || isAsyncFunction( fn );
+
 function isUndefined() {
     return arguments.length > 0 && typeof arguments[ 0 ] === 'undefined';
 }
+
+const defineProperty = Object.defineProperty;
+const methods = [ 'clear', 'delete', 'entries', 'forEach', 'get', 'has', 'keys', 'set', 'values' ];
+
+const supportNativeMap = () => {
+    if( typeof Map === 'undefined' ) return false;
+    for( const method of methods ) {
+        if( !isFunction( Map.prototype[ method ] ) ) return false;
+    }
+    return true;
+};
 
 function find( haystack, key ) {
     for( let item of haystack ) {
@@ -11,77 +41,113 @@ function find( haystack, key ) {
     return false;
 }
 
-class Map {
-    constructor( iterable = [] ) {
-        if( !( this instanceof Map ) ) {
+class M {
+    constructor( iterable = [], nativeMap = true ) {
+        if( !( this instanceof M ) ) {
             throw new TypeError( 'Constructor Map requires \'new\'' );
         }
+
+        if( nativeMap && supportNativeMap() ) {
+            return new Map( iterable );
+        }
+
         const map = iterable || [];
 
-        Object.defineProperty( map, 'size', {
+        defineProperty( map, 'size', {
+            enumerable : false,
             get() {
                 return this.length;
             }
         } );
 
-        map.get = key => {
-            const data = find( map, key );
-            return data ? data[ 1 ] : undefined;
-        };
-
-        map.set = ( key, value ) => {
-            const data = find( map, key );
-            if( data ) {
-                data[ 1 ] = value;
-            } else {
-                map.push( [ key, value ] );
+        defineProperty( map, 'get', {
+            enumerable : false,
+            value : function( key ) {
+                const data = find( this, key );
+                return data ? data[ 1 ] : undefined;
             }
-            return map;
-        };
+        } );
 
-        map.delete = key => {
-            for( let i = 0, l = map.length; i < l; i += 1 ) {
-                if( map[ i ][ 0 ] === key ) {
-                    map.splice( i, 1 );
-                    return true;
+        defineProperty( map, 'set', {
+            enumerable : false,
+            value : function( key, value ) {
+                const data = find( this, key );
+                if( data ) {
+                    data[ 1 ] = value;
+                } else {
+                    this.push( [ key, value ] );
                 }
-                
+                return this;
             }
-            return false;
-        };
+        } );
 
-        map.clear = () => {
-            map.length = 0;
-        };
-
-        map.forEach = ( callback, thisArg ) => {
-            isUndefined( thisArg ) && ( thisArg = map );
-            for( let item of map ) {
-                callback.call( thisArg, item[ 1 ], item[ 0 ], map );
+        defineProperty( map, 'delete', {
+            enumerable : false,
+            value : function( key ) {
+                for( let i = 0, l = this.length; i < l; i += 1 ) {
+                    if( this[ i ][ 0 ] === key ) {
+                        this.splice( i, 1 );
+                        return true;
+                    }
+                }
+                return false;
             }
-        };
+        } );
 
-        map.has = key => !!find( map, key );
-
-        map.keys = () => {
-            const keys = [];
-            for( let item of map ) {
-                keys.push( item[ 0 ] );
+        defineProperty( map, 'clear', {
+            enumerable : false,
+            value : function() {
+                this.length = 0;
             }
-            return keys;
-        };
+        } );
 
-        map.entries = () => map;
-
-        map.values = () => {
-            const values = [];
-            for( let item of map ) {
-                values.push( item[ 1 ] );
+        defineProperty( map, 'forEach', {
+            enumerable : false,
+            value : function( callback, thisArg ) {
+                isUndefined( thisArg ) && ( thisArg = this );
+                for( let item of this ) {
+                    callback.call( thisArg, item[ 1 ], item[ 0 ], this );
+                }
             }
-            return values;
-        };
+        } );
+
+        defineProperty( map, 'has', {
+            enumerable : false,
+            value : function( key ) {
+                return !!find( this, key );
+            }
+        } );
+
+        defineProperty( map, 'keys', {
+            enumerable : false,
+            value : function() {
+                const keys = [];
+                for( let item of this ) {
+                    keys.push( item[ 0 ] );
+                }
+                return keys;
+            }
+        } );
+
+        defineProperty( map, 'entries', {
+            enumerable : false,
+            value : function() {
+                return this;
+            }
+        } );
+
+        defineProperty( map, 'values', {
+            enumerable : false,
+            value : function() {
+                const values = [];
+                for( let item of this ) {
+                    values.push( item[ 1 ] );
+                }
+                return values;
+            }
+        } );
         return map;
     }
 }
 
-module.exports = Map;
+module.exports = M;
