@@ -1,4 +1,7 @@
 # Map
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/LvChengbin/map.svg)](https://greenkeeper.io/)
+
 An implementation of Map in JavaScript for browsers. Supporting methods of Map in ES6.
 
 ## Usage
